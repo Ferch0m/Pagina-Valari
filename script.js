@@ -11,7 +11,9 @@ const valariDict = {
     "he": "he", "his": "hes", "him": "hem", "himself": "hermelta",
     "she": "sa", "hers": "sar", "her": "sam", "herself": "sarmelta",
     "they": "se", "their": "ser", "theirs": "ses", "themself": "sermelta",
-    "we": "on", "us": "us", "my": "mo",
+    "we": "on", "us": "us", "my": "mo", 
+    "this": "dis", "these": "dise",
+    "that": "sod", "that": "sode", 
 
     // Particles
     "the": "vor", "a": "va", "to": "na", "and": "pote", "in": "rin",
