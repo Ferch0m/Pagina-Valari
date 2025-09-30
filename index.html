@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Traductor Valari</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Fuente Roboto -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    <!-- Encabezado -->
+    <header>
+        <div class="logo">
+            <i class="fa-solid fa-language"></i>
+            <span>Traductor Valari</span>
+        </div>
+    </header>
+
+    <!-- Contenedor principal -->
+    <main class="centered">
+        <div class="container">
+            <h1><i class="fa-solid fa-book-open"></i> Valari</h1>
+
+            <!-- Selección de modo -->
+            <div class="options">
+                <label for="mode"><i class="fa-solid fa-exchange-alt"></i> Modo de traducción:</label>
+                <select id="mode">
+                    <option value="to_valari">Inglés ➝ Valari</option>
+                    <option value="from_valari">Valari ➝ Inglés</option>
+                </select>
+            </div>
+
+            <!-- Caja de entrada -->
+            <textarea id="inputText" placeholder="✍️ Escribe aquí tu texto..."></textarea>
+
+            <!-- Botones -->
+            <div id="buttons">
+                <!-- Boton Traducir -->
+                <button id="translateBtn"><i class="fa-solid fa-wand-magic-sparkles"></i> Traducir</button>
+
+                <!-- Boton Banco de Palabras -->
+                <a href="banco.html" class="btn-banco">
+                    <button><i class="fa-solid fa-book"></i> Banco de palabras</button>
+                </a>
+            </div>
+
+
+            <!-- Resultado -->
+            <h2><i class="fa-solid fa-check"></i> Resultado:</h2>
+            <div id="outputText"></div>
+
+            <!-- Historial -->
+            <h2><i class="fa-solid fa-clock-rotate-left"></i> Historial</h2>
+            <ul id="history"></ul>
+        </div>
+    </main>
+
+    <!-- Pie de página -->
+    <footer>
+        <p>Traductor de mierda — Creado con Culo 🩷</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

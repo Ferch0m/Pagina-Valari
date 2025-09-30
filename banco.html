@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Banco de Palabras - Valari</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    <!-- Encabezado -->
+    <header>
+        <div class="logo">
+            <i class="fa-solid fa-language"></i>
+            <span>Banco de palabras</span>
+        </div>
+    </header>
+
+    <!-- Contenido principal -->
+    <main class="centered">
+        <div class="container">
+            <h1>Diccionario Valari</h1>
+            <p>Aquí puedes consultar todas las palabras disponibles en el traductor:</p>
+
+            <!-- Barra de búsqueda -->
+            <input type="text" id="busqueda" placeholder="🔍 Buscar palabra..." />
+
+            <!-- Tabla -->
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Inglés</th>
+                            <th>Valari</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-palabras">
+                        <!-- Filas dinámicas aquí -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Botón volver -->
+            <div style="margin-top: 30px;">
+                <a href="index.html" class="btn-volver">⬅ Volver al traductor</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>Traductor de mierda — Creado con Culo 🩷</p>
+    </footer>
+
+    <!-- Script que carga el diccionario -->
+    <script src="script.js"></script> <!-- reutilizamos el diccionario -->
+    <script>
+        const tabla = document.getElementById("tabla-palabras");
+        const busqueda = document.getElementById("busqueda");
+
+        // Función para llenar la tabla
+        function cargarTabla(filtro = "") {
+            tabla.innerHTML = ""; // limpiar tabla
+
+            const palabrasOrdenadas = Object.keys(valariDict).sort();
+
+            palabrasOrdenadas.forEach(ing => {
+                const valari = valariDict[ing];
+
+                // Filtro por búsqueda
+                if (
+                    ing.toLowerCase().includes(filtro) || 
+                    valari.toLowerCase().includes(filtro)
+                ) {
+                    const fila = document.createElement("tr");
+                    fila.innerHTML = `<td>${ing}</td><td>${valari}</td>`;
+                    tabla.appendChild(fila);
+                }
+            });
+        }
+
+        // Inicializar tabla
+        cargarTabla();
+
+        // Buscar en tiempo real
+        busqueda.addEventListener("input", e => {
+            const filtro = e.target.value.toLowerCase();
+            cargarTabla(filtro);
+        });
+    </script>
+</body>
+</html>

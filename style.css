@@ -1,0 +1,257 @@
+/* Fuente Roboto */
+body {
+    font-family: 'Roboto', sans-serif;
+    background: #fdfaf6;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Header */
+header {
+    background: linear-gradient(90deg, #e0a743, #d65124);
+    color: white;
+    padding: 15px 30px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+header .logo {
+    font-size: 22px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Footer */
+footer {
+    background: #333;
+    color: #ddd;
+    text-align: center;
+    padding: 12px;
+    font-size: 14px;
+}
+
+/* Contenido principal */
+main.centered {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 40px 20px;
+}
+
+#buttons {
+    display: flex;
+    justify-content: center; /* los centra */
+    gap: 20px; /* espacio entre ellos */
+    margin-top: 20px; /* separación superior */
+}
+
+#buttons a {
+    text-decoration: none; /* quitar subrayado al link */
+}
+
+#buttons button {
+    margin-top: 0; /* quitar margen extra de button */
+}
+
+
+.container {
+    width: 90%;
+    max-width: 950px;
+    background: white;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+    animation: fadeIn 0.5s ease-in-out;
+    text-align: center;
+}
+
+/* Títulos */
+h1 {
+    color: #d65124;
+    margin-bottom: 25px;
+}
+h2 {
+    margin-top: 30px;
+    color: #e0a743;
+    text-align: left;
+}
+
+/* ============================== */
+/* Input búsqueda / Select        */
+/* ============================== */
+#busqueda, select, textarea {
+    width: 96%;
+    padding: 12px 16px;
+    font-size: 16px;
+    margin: 15px 0;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    outline: none;
+    transition: border 0.2s;
+    text-align: center
+}
+
+/* Busqueda y Select centrados */
+#busqueda,
+select {
+    width: 96%;
+    padding: 12px 16px;
+    font-size: 16px;
+    margin: 15px 0;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    outline: none;
+    transition: border 0.2s;
+    text-align: center;
+}
+
+/* Textarea alineado a la izquierda */
+textarea {
+    width: 96%;
+    padding: 12px 16px;
+    font-size: 18px;
+    margin: 15px 0;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    outline: none;
+    transition: border 0.2s;
+    text-align: left;
+    height: 200px;
+    resize: none;
+}
+
+#busqueda:focus, select:focus, textarea:focus {
+    border: 1px solid #d65124;
+    box-shadow: 0 0 6px rgba(214,81,36,0.3);
+}
+
+/* Textarea */
+textarea {
+    height: 200px;
+    resize: none;
+    font-size: 18px;
+}
+
+/* Botón */
+button, .btn-volver {
+    margin-top: 20px;
+    padding: 14px 22px;
+    font-size: 16px;
+    background: #d65124;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+}
+button:hover, .btn-volver:hover {
+    background: #b9421d;
+}
+
+/* ============================== */
+/* Tablas                        */
+/* ============================== */
+.table-wrapper {
+    max-height: 400px;
+    overflow-y: auto;
+    margin-top: 10px;
+    border-radius: 12px;
+    border: 1px solid #eee;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 16px;
+}
+th, td {
+    padding: 14px 18px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+th {
+    background: #e0a743;
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+tr:nth-child(even) {
+    background: #fdf5e6;
+}
+
+/* ============================== */
+/* Historial tipo lista simple    */
+/* ============================== */
+#history {
+    list-style: none;
+    padding: 0;
+    margin-top: 15px;
+    text-align: left;
+}
+#history li {
+    background: #fffaf0;
+    border: 1px solid #e0a743;
+    padding: 10px 14px;
+    margin: 6px 0;
+    border-radius: 8px;
+    font-size: 15px;
+    color: #333;
+    transition: background 0.2s;
+}
+#history li:hover {
+    background: #fff2cc;
+}
+
+/* Resultado */
+#outputText {
+    margin-top: 15px;
+    padding: 16px;
+    background: #fff5e1;
+    border-radius: 10px;
+    min-height: 60px;
+    font-size: 18px;
+    border: 1px solid #e0a743;
+    text-align: left;
+}
+
+/* Animación */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Fondo animado con rombos */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+        repeating-linear-gradient(45deg, #ffa789 20px 35px, transparent 40px 80px),
+        repeating-linear-gradient(-45deg, #ffa789 20px 35px, transparent 90px 80px);
+    background-size: 80px 80px;
+    animation: moveBackground 15s linear infinite;
+    z-index: -1;
+    opacity: 0.5;
+}
+
+/* Animación en diagonal */
+@keyframes moveBackground {
+    0% { background-position: 0 0; }
+    100% { background-position: 80px 80px; }
+}
