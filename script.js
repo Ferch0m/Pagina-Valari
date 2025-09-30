@@ -6,7 +6,7 @@
 const valariDict = {
 
     // Pronouns 
-    "i": "mi",
+    "i": "mi", "am": "pa",
     "you": "tu", "your": "tur", "yours": "turs", "yourself": "turmelta",
     "he": "he", "his": "hes", "him": "hem", "himself": "hermelta",
     "she": "sa", "hers": "sar", "her": "sam", "herself": "sarmelta",
@@ -46,11 +46,14 @@ const valariDict = {
     // People
     "friend": "selin", "enemy": "orvan", "leader": "tholar",
     "child": "shael", "parent": "mora", "teacher": "yuli",
-    "soldier": "harnak", "healer": "viler",
+    "soldier": "harnak", "healer": "viler", "children": "shaelin",
     "king": "kovan", "queen": "velar", "stranger": "norin",
     "priest": "shalen", "student": "nurel",
     "man": "daine", "men": "dainema",
     "woman": "leoma", "women": "leomane",
+    "guys": "gomas", "ladies": "tergas",
+    "guy": "goma", "ladie": "terga",
+    "boy": "shaelo", "girl": "shaela",
 
     // Emotions
     "love": "kar", "loved": "karen", "hate": "zol", "hated": "zolten",
@@ -108,7 +111,8 @@ const valariDict = {
 
     // Extras
     "hi": "ambulo", "hello": "ameo",
-    "gay": "fah", "lesbian": "tenbua", "bitch": "sulekan"
+    "gay": "fah", "lesbian": "tenbua", "bitch": "sulekan",
+    "no-binary": "binao", "shit": "kaeka"
 };
 
 // Diccionario inverso
