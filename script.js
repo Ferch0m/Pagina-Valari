@@ -13,7 +13,7 @@ const valariDict = {
     "they": "se", "their": "ser", "theirs": "ses", "themself": "sermelta",
     "we": "on", "us": "us", "my": "mo", 
     "this": "dis", "these": "dise",
-    "that": "sod", "that": "sode", 
+    "that": "sod", "those": "sode", 
 
     // Particles
     "the": "vor", "a": "va", "to": "na", "and": "pote", "in": "rin",
