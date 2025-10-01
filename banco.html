@@ -20,8 +20,15 @@
             <h1>Diccionario Valari</h1>
             <p>Aquí puedes consultar todas las palabras disponibles en el traductor:</p>
 
-            <input type="text" id="busqueda" placeholder="🔍 Buscar palabra..." />
-
+            <div class="search-controls">
+                <input type="text" id="busqueda" placeholder="🔍 Buscar palabra..." />
+                <select id="criterio-busqueda">
+                    <option value="ambos">Buscar en Ambos</option>
+                    <option value="ingles">Buscar en Inglés</option>
+                    <option value="valari">Buscar en Valari</option>
+                </select>
+            </div>
+            
             <div class="table-wrapper">
                 <table>
                     <thead>
@@ -46,49 +53,145 @@
         <p>Traductor de mierda — Creado con Culo 🩷</p>
     </footer>
 
-    <script src="script.js"></script> <script>
+    <script src="script.js"></script> 
+    
+    <script>
+        // Asegúrate de que valariDict está disponible globalmente desde script.js
+        if (typeof valariDict === 'undefined') {
+            console.error("Error: El diccionario 'valariDict' no está cargado. Asegúrate de que script.js esté correctamente vinculado.");
+        }
+
         const tabla = document.getElementById("tabla-palabras");
         const busqueda = document.getElementById("busqueda");
+        const criterioBusqueda = document.getElementById("criterio-busqueda");
 
-        // Función para llenar la tabla
-        function cargarTabla(filtro = "") {
-            tabla.innerHTML = ""; // limpiar tabla
+        /**
+         * Calcula un puntaje de relevancia para la palabra encontrada.
+         * Puntaje: 3 (Exacta) > 2 (Empieza con) > 1 (Contiene)
+         * @param {string} text - El texto a evaluar (Inglés o Valari).
+         * @param {string} filtro - El término de búsqueda en minúsculas.
+         * @returns {number} Puntaje de relevancia.
+         */
+        function calcularRelevancia(text, filtro) {
+            if (!filtro) return 0;
 
-            // Obtener y ordenar las claves (palabras en inglés)
-            const palabrasOrdenadas = Object.keys(valariDict).sort();
+            const textLower = text.toLowerCase();
             
-            // Inicializar un contador de filas visibles
-            let contador = 1; 
+            // 1. Coincidencia EXACTA (Máxima prioridad)
+            if (textLower === filtro) {
+                return 3;
+            } 
+            
+            // 2. Coincidencia al INICIO de la palabra (Alta prioridad)
+            if (textLower.startsWith(filtro)) {
+                return 2;
+            } 
+            
+            // 3. Coincidencia PARCIAL (Menor prioridad)
+            if (textLower.includes(filtro)) {
+                return 1;
+            } 
+            
+            return 0;
+        }
+
+        // Función para llenar y ordenar la tabla
+        function cargarTabla(filtro = "", criterio = "ambos") {
+            tabla.innerHTML = ""; 
+
+            // Si el filtro está vacío, volvemos a la tabla completa ordenada alfabéticamente
+            if (!filtro) {
+                // Mantenemos el orden alfabético original
+                const palabrasOrdenadas = Object.keys(valariDict).sort();
+                
+                let contador = 1; 
+                palabrasOrdenadas.forEach(ing => {
+                    const fila = document.createElement("tr");
+                    fila.innerHTML = `<td>${contador}</td><td>${ing}</td><td>${valariDict[ing]}</td>`;
+                    tabla.appendChild(fila);
+                    contador++;
+                });
+                return;
+            }
+
+            const palabrasOrdenadas = Object.keys(valariDict).sort();
+            const filtroLower = filtro.toLowerCase();
+            const resultadosFiltrados = [];
 
             palabrasOrdenadas.forEach(ing => {
                 const valari = valariDict[ing];
-                const filtroLower = filtro.toLowerCase();
+                const ingLower = ing.toLowerCase();
+                const valariLower = valari.toLowerCase();
+                
+                let cumpleFiltro = false;
+                let relevancia = 0;
+                let textoBusqueda = "";
 
-                // Filtro por búsqueda
-                if (
-                    ing.toLowerCase().includes(filtroLower) || 
-                    valari.toLowerCase().includes(filtroLower)
-                ) {
-                    const fila = document.createElement("tr");
-                    
-                    // Añadir celda con el contador, inglés y valari
-                    fila.innerHTML = `<td>${contador}</td><td>${ing}</td><td>${valari}</td>`;
-                    tabla.appendChild(fila);
-                    
-                    // Incrementar el contador solo si la fila es visible
-                    contador++; 
+                // Lógica de FILTRADO y determinación del texto a puntuar
+                if (criterio === "ingles" && ingLower.includes(filtroLower)) {
+                    cumpleFiltro = true;
+                    textoBusqueda = ing;
+                } else if (criterio === "valari" && valariLower.includes(filtroLower)) {
+                    cumpleFiltro = true;
+                    textoBusqueda = valari;
+                } else if (criterio === "ambos" && (ingLower.includes(filtroLower) || valariLower.includes(filtroLower))) {
+                    cumpleFiltro = true;
+                    // En "ambos", priorizamos la coincidencia en Inglés para el puntaje.
+                    textoBusqueda = ingLower.includes(filtroLower) ? ing : valari;
                 }
+
+                // Si cumple el filtro, calcula la relevancia y guarda el resultado
+                if (cumpleFiltro) {
+                    relevancia = calcularRelevancia(textoBusqueda, filtroLower);
+                    resultadosFiltrados.push({
+                        ing: ing,
+                        valari: valari,
+                        relevancia: relevancia,
+                        // Usar la palabra en inglés para el desempate por orden alfabético
+                        ordenAlfabetico: ingLower 
+                    });
+                }
+            });
+
+            // 3. Lógica de ORDENAMIENTO: Ordena por Relevancia (descendente) y luego por Orden Alfabético
+            resultadosFiltrados.sort((a, b) => {
+                // Primero, compara por relevancia (los puntajes más altos van primero)
+                if (b.relevancia !== a.relevancia) {
+                    return b.relevancia - a.relevancia;
+                }
+                // Segundo, si las relevancias son iguales, ordena alfabéticamente
+                if (a.ordenAlfabetico < b.ordenAlfabetico) {
+                    return -1;
+                }
+                if (a.ordenAlfabetico > b.ordenAlfabetico) {
+                    return 1;
+                }
+                return 0;
+            });
+
+            // 4. Renderizado: Renderiza los resultados ordenados en la tabla
+            let contador = 1; 
+            resultadosFiltrados.forEach(item => {
+                const fila = document.createElement("tr");
+                fila.innerHTML = `<td>${contador}</td><td>${item.ing}</td><td>${item.valari}</td>`;
+                tabla.appendChild(fila);
+                contador++; 
             });
         }
 
-        // Inicializar tabla al cargar la página
+        // Inicializar tabla al cargar la página (muestra todo ordenado alfabéticamente)
         cargarTabla();
 
-        // Buscar en tiempo real al escribir en el input
-        busqueda.addEventListener("input", e => {
-            const filtro = e.target.value;
-            cargarTabla(filtro);
-        });
+        // Función para manejar el evento de cambio en el selector o la caja de búsqueda
+        const manejarBusqueda = () => {
+            const filtro = busqueda.value;
+            const criterio = criterioBusqueda.value;
+            cargarTabla(filtro, criterio);
+        };
+
+        // Escuchar eventos en la caja de búsqueda y en el selector
+        busqueda.addEventListener("input", manejarBusqueda);
+        criterioBusqueda.addEventListener("change", manejarBusqueda);
     </script>
 </body>
 </html>

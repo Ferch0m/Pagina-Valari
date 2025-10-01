@@ -105,6 +105,8 @@ const valariDict = {
     "go": "navar", "going": "navarun", "went": "navaren",
     // ---------- Grupo 18: make ----------
     "make": "toril", "making": "torilun", "made": "torilen",
+    // ---------- Grupo 19: get ----------
+    "get": "gen", "getting": "genun", "got": "genen",
 
     // Religion
     "religion": "lytheris", "spirit": "nira", "deity": "kaerith",
@@ -211,7 +213,17 @@ translateBtn.addEventListener("click", () => {
 
     outputText.textContent = result;
 
-    const li = document.createElement("li");
-    li.textContent = `"${text}" ➝ "${result}"`;
-    historyList.prepend(li);
+    const li = document.createElement("li");
+    li.textContent = `"${text}" ➝ "${result}"`;
+    
+    // AGREGAR LA CLASE DE ANIMACIÓN AQUÍ
+    li.classList.add("new-entry"); 
+    
+    historyList.prepend(li);
+    
+    // OPCIONAL: Quitar la clase de animación después de que termine 
+    // para que no interfiera si se quisiera usar otra animación después
+    setTimeout(() => {
+        li.classList.remove("new-entry");
+    }, 500); // 500ms coincide con la duración de la animación (0.5s)
 });

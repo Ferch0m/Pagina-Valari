@@ -48,17 +48,17 @@ main.centered {
 
 #buttons {
     display: flex;
-    justify-content: center; /* los centra */
-    gap: 20px; /* espacio entre ellos */
-    margin-top: 20px; /* separación superior */
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
 }
 
 #buttons a {
-    text-decoration: none; /* quitar subrayado al link */
+    text-decoration: none;
 }
 
 #buttons button {
-    margin-top: 0; /* quitar margen extra de button */
+    margin-top: 0;
 }
 
 
@@ -85,39 +85,43 @@ h2 {
 }
 
 /* ============================== */
-/* Input búsqueda / Select        */
+/* Input búsqueda / Select        */
 /* ============================== */
-#busqueda, select, textarea {
-    width: 96%;
-    padding: 12px 16px;
-    font-size: 16px;
-    margin: 15px 0;
-    border-radius: 10px;
-    border: 1px solid #ccc;
-    outline: none;
-    transition: border 0.2s;
-    text-align: center
-}
 
-/* Busqueda y Select centrados */
-#busqueda,
-select {
-    width: 96%;
+/* Controles de Búsqueda (Flexbox) */
+.search-controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+.search-controls input, .search-controls select {
     padding: 12px 16px;
-    font-size: 16px;
-    margin: 15px 0;
+    font-size: 18px;
+    margin: 0; 
     border-radius: 10px;
     border: 1px solid #ccc;
     outline: none;
     transition: border 0.2s;
+}
+.search-controls input {
+    flex-grow: 1;
     text-align: center;
 }
+.search-controls select {
+    flex-shrink: 0; 
+}
+
+
+/* ============================== */
+/* Textarea y Botones del Traductor */
+/* ============================== */
 
 /* Textarea alineado a la izquierda */
 textarea {
     width: 96%;
     padding: 12px 16px;
-    font-size: 18px;
+    /* TAMAÑO BASE GRANDE PARA DESKTOP */
+    font-size: 18px; 
     margin: 15px 0;
     border-radius: 10px;
     border: 1px solid #ccc;
@@ -126,18 +130,6 @@ textarea {
     text-align: left;
     height: 200px;
     resize: none;
-}
-
-#busqueda:focus, select:focus, textarea:focus {
-    border: 1px solid #d65124;
-    box-shadow: 0 0 6px rgba(214,81,36,0.3);
-}
-
-/* Textarea */
-textarea {
-    height: 200px;
-    resize: none;
-    font-size: 18px;
 }
 
 /* Botón */
@@ -161,11 +153,58 @@ button:hover, .btn-volver:hover {
     background: #b9421d;
 }
 
+
 /* ============================== */
-/* Tablas                        */
+/* Resultado y Historial UNIFICADOS */
+/* ============================== */
+
+/* Resultado */
+#outputText {
+    margin-top: 15px;
+    padding: 16px;
+    background: #fff5e1;
+    border-radius: 10px;
+    min-height: 60px;
+    /* TAMAÑO UNIFICADO CON TEXTAREA BASE */
+    font-size: 18px; 
+    border: 1px solid #e0a743;
+    text-align: left;
+}
+
+/* Historial */
+#history {
+    list-style: none;
+    padding: 0;
+    margin-top: 15px;
+    text-align: left;
+}
+#history li {
+    background: #fffaf0;
+    border: 1px solid #e0a743;
+    padding: 10px 14px;
+    margin: 6px 0;
+    border-radius: 8px;
+    /* TAMAÑO DE LETRA A IGUALAR CON OUTPUT Y TEXTAREA EN MÓVIL */
+    font-size: 18px; 
+    color: #333;
+    transition: background 0.2s;
+}
+#history li:hover {
+    background: #fff2cc;
+}
+
+/* Enfocados */
+#busqueda:focus, select:focus, textarea:focus {
+    border: 1px solid #d65124;
+    box-shadow: 0 0 6px rgba(214,81,36,0.3);
+}
+
+/* ============================== */
+/* Tablas (Banco de Palabras) */
 /* ============================== */
 .table-wrapper {
-    max-height: 400px;
+    /* Altura por defecto para desktop/pantallas grandes */
+    max-height: 400px; 
     overflow-y: auto;
     margin-top: 10px;
     border-radius: 12px;
@@ -192,48 +231,13 @@ tr:nth-child(even) {
     background: #fdf5e6;
 }
 
-/* ============================== */
-/* Historial tipo lista simple    */
-/* ============================== */
-#history {
-    list-style: none;
-    padding: 0;
-    margin-top: 15px;
-    text-align: left;
-}
-#history li {
-    background: #fffaf0;
-    border: 1px solid #e0a743;
-    padding: 10px 14px;
-    margin: 6px 0;
-    border-radius: 8px;
-    font-size: 15px;
-    color: #333;
-    transition: background 0.2s;
-}
-#history li:hover {
-    background: #fff2cc;
-}
-
-/* Resultado */
-#outputText {
-    margin-top: 15px;
-    padding: 16px;
-    background: #fff5e1;
-    border-radius: 10px;
-    min-height: 60px;
-    font-size: 18px;
-    border: 1px solid #e0a743;
-    text-align: left;
-}
 
 /* Animación */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
 }
-
-/* Fondo animado con rombos */
+/* Fondo animado con rombos y animación */
 body::before {
     content: "";
     position: fixed;
@@ -249,9 +253,129 @@ body::before {
     z-index: -1;
     opacity: 0.5;
 }
-
-/* Animación en diagonal */
 @keyframes moveBackground {
     0% { background-position: 0 0; }
     100% { background-position: 80px 80px; }
+}
+
+/*
+==============================
+DISEÑO RESPONSIVO 📱 TABLET
+==============================
+*/
+@media (max-width: 768px) {
+    /* Ajustes generales de relleno */
+    header {
+        padding: 15px 20px;
+    }
+    main.centered {
+        padding: 20px 10px;
+    }
+    .container {
+        padding: 25px;
+    }
+    
+    /* Reducir el tamaño de texto en el Traductor para tablets */
+    textarea, #outputText {
+        font-size: 17px;
+    }
+
+    /* Tabla: Asegurar que el tamaño de fuente es apropiado */
+    table {
+        font-size: 15px;
+    }
+    th, td {
+        padding: 12px 15px;
+    }
+    
+    /* AUMENTO DEL TAMAÑO DEL SLIDE EN TABLETS */
+    .table-wrapper {
+        max-height: 500px; /* Incrementado para dar más espacio vertical */
+    }
+}
+
+
+/*
+==============================
+DISEÑO RESPONSIVO 📱 MÓVIL
+==============================
+*/
+@media (max-width: 500px) {
+    
+    /* Header */
+    header .logo {
+        font-size: 20px;
+        flex-direction: column; 
+        gap: 0;
+    }
+    
+    .container {
+        padding: 15px; 
+        width: 100%;
+    }
+
+    /* Texto: Tamaño unificado y reducido */
+    textarea, #outputText, #history li {
+        font-size: 16px; 
+        padding: 10px;
+        line-height: 1.5;
+    }
+
+    /* Barra de Búsqueda (Banco de Palabras): Apilar los elementos */
+    .search-controls {
+        flex-direction: column; 
+        gap: 10px;
+    }
+    .search-controls input, .search-controls select {
+        width: 100%; 
+        box-sizing: border-box; 
+        margin: 0;
+    }
+    
+    /* Botones: Se apilan si hay más de uno */
+    #buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    /* Ajuste de Texto */
+    h1 {
+        font-size: 26px;
+    }
+    
+    /* Tabla: Ajuste del tamaño de letra y padding */
+    table {
+        font-size: 14px;
+    }
+    th, td {
+        padding: 10px 8px;
+    }
+
+    /* AUMENTO DEL TAMAÑO DEL SLIDE EN CELULARES */
+    .table-wrapper {
+        max-height: 70vh; /* Usa el 70% de la altura de la vista para maximizar espacio */
+    }
+}
+
+/* Animación de entrada para el historial */
+@keyframes historyEntry {
+    0% { 
+        opacity: 0; 
+        transform: translateY(-10px) scale(0.95); /* Empieza un poco arriba y pequeño */
+        box-shadow: 0 0 0 rgba(0,0,0,0);
+    }
+    50% {
+        transform: translateY(0) scale(1.01); /* Pequeño rebote */
+        box-shadow: 0 4px 12px rgba(224, 167, 67, 0.4); /* Sombra de color en el rebote */
+    }
+    100% { 
+        opacity: 1; 
+        transform: translateY(0) scale(1);
+        box-shadow: none; /* La sombra desaparece al final */
+    }
+}
+
+/* Aplica la animación al nuevo elemento de la lista */
+#history .new-entry {
+    animation: historyEntry 0.5s ease-out; /* Duración de 0.5s */
 }
